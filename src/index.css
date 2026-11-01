@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@import "tailwindcss";
+
+@font-face {
+  font-family: "main-font";
+  src: url("./assets/fonts/Stormfaze.otf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@property --cx {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+/* desktop: tooltip di bawah */
+@keyframes tooltip-bounce {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -8px);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%, 6px);
+  }
+  65% {
+    transform: translate(-50%, -3px);
+  }
+  85% {
+    transform: translate(-50%, 2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* mobile: tooltip di atas */
+@keyframes tooltip-bounce-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%, -6px);
+  }
+  65% {
+    transform: translate(-50%, 3px);
+  }
+  85% {
+    transform: translate(-50%, -2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes title-bounce {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+  75% {
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@theme {
+  --font-main: "main-font", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+}
+
+:root {
+  --bar: #111214;
+  --btn: #1a1b1f;
+  --page: #f5f5f5;
+}
+
+html,
+body {
+  overflow-x: clip;
+  background: var(--page);
+}
+
+body {
+  font-family: "main-font", sans-serif;
+}

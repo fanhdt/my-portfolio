@@ -1,0 +1,19 @@
+import { IMAGES_DATA } from "./imageData";
+
+export const PROJECTS = [
+  {
+    slug: "slms",
+    title: "Smart Laboratory Management System",
+    short: "SLMS",
+    category: "Web",
+    description: "A laboratory management system designed to manage lab activities, rental, and photography services with modern features.",
+    image: IMAGES_DATA[0].src,
+    screenshots: [IMAGES_DATA[0].src, IMAGES_DATA[0].src, IMAGES_DATA[0].src, IMAGES_DATA[0].src],
+    features: ["Laboratory management", "Rental management", "Photography service", "Authentication & Role management"],
+    technologies: ["Laravel", "Vue", "PostgreSQL", "Docker", "MinIO"],
+    role: "Fullstack Developer",
+    impact: ["ANJAYYY"],
+    liveUrl: "https://slmsupi.studio",
+    githubUrl: "https://github.com/fanhdt/main-slms",
+  },
+];
