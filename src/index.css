@@ -269,3 +269,234 @@ body {
     filter: brightness(0.5);
   }
 }
+
+/* ===================== CONTACT: ZZZ TRANSMISSION ===================== */
+/* Tempel di BAWAH index.css milikmu (setelah keyframes push-right). */
+
+@property --ang {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* border neon berputar di tombol kirim */
+.zz-border {
+  background: conic-gradient(from var(--ang), #bef264, transparent 30%, #7dd3fc 55%, transparent 75%, #f472b6, #bef264);
+  animation: zz-spin 3.2s linear infinite;
+}
+.zz-border[data-sending] {
+  animation-duration: 0.7s;
+}
+@keyframes zz-spin {
+  to {
+    --ang: 360deg;
+  }
+}
+
+/* marquee pita miring */
+.zz-marquee {
+  display: flex;
+  width: max-content;
+  animation: zz-marquee 18s linear infinite;
+}
+@keyframes zz-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* kursor berkedip di eyebrow */
+.zz-caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 0.4em;
+  vertical-align: -0.12em;
+  background: #bef264;
+  animation: zz-blink 1s steps(2, start) infinite;
+}
+@keyframes zz-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* judul: sesekali pecah RGB seperti sinyal TV */
+.zz-rgb {
+  animation: zz-rgb 6s infinite;
+}
+@keyframes zz-rgb {
+  0%,
+  89%,
+  100% {
+    text-shadow: none;
+    transform: none;
+  }
+  91% {
+    text-shadow:
+      3px 0 #f472b6,
+      -3px 0 #7dd3fc;
+    transform: translateX(2px);
+  }
+  93% {
+    text-shadow:
+      -4px 0 #f472b6,
+      4px 0 #7dd3fc;
+    transform: translateX(-3px) skewX(-4deg);
+  }
+  95% {
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+/* gambar: irisan glitch bergeser (dua salinan gambar) */
+.zz-slice-a,
+.zz-slice-b {
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+.zz-slice-a {
+  filter: hue-rotate(90deg) saturate(2);
+  animation: zz-slice 5s infinite;
+}
+.zz-slice-b {
+  filter: hue-rotate(-70deg) saturate(2);
+  animation: zz-slice 5s 0.12s infinite reverse;
+}
+@keyframes zz-slice {
+  0%,
+  90%,
+  100% {
+    opacity: 0;
+  }
+  91% {
+    opacity: 1;
+    clip-path: inset(18% 0 62% 0);
+    transform: translateX(-14px);
+  }
+  94% {
+    opacity: 1;
+    clip-path: inset(52% 0 28% 0);
+    transform: translateX(12px);
+  }
+  97% {
+    opacity: 1;
+    clip-path: inset(78% 0 6% 0);
+    transform: translateX(-7px);
+  }
+}
+
+/* garis pindai CRT */
+.zz-scanlines {
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 4px);
+  mix-blend-mode: multiply;
+}
+.zz-sweepline::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 18%;
+  background: linear-gradient(to bottom, transparent, rgba(190, 242, 100, 0.22), transparent);
+  animation: zz-sweep 4.5s linear infinite;
+}
+@keyframes zz-sweep {
+  from {
+    transform: translateY(-120%);
+  }
+  to {
+    transform: translateY(620%);
+  }
+}
+
+/* field: penanda berlian berputar saat fokus */
+.zz-dot {
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s;
+}
+.zz-field:focus-within .zz-dot {
+  background-color: #bef264;
+  transform: rotate(225deg) scale(1.35);
+}
+
+/* overlay sukses: sapuan miring */
+.zz-wipe {
+  animation: zz-wipe 0.8s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+@keyframes zz-wipe {
+  from {
+    clip-path: polygon(0 0, 0 0, -24% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 124% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* error: panel bergetar */
+.zz-shake {
+  animation: zz-shake 0.45s;
+}
+@keyframes zz-shake {
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zz-border,
+  .zz-marquee,
+  .zz-caret::after,
+  .zz-rgb,
+  .zz-slice-a,
+  .zz-slice-b,
+  .zz-sweepline::after,
+  .zz-wipe,
+  .zz-shake {
+    animation: none;
+  }
+}
+
+/* ===================== ABOUT: tambahan kecil ===================== */
+/* Tempel di bawah zz-contact.css. About memakai ulang zz-rgb, zz-slice-a/b,
+   zz-scanlines, zz-sweepline dan zz-marquee dari file itu. */
+
+/* kilau lewat di bar statistik */
+.zz-shine {
+  position: relative;
+  overflow: hidden;
+}
+.zz-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.75) 50%, transparent 70%);
+  transform: translateX(-130%);
+  animation: zz-shine 4s 2s infinite;
+}
+@keyframes zz-shine {
+  0% {
+    transform: translateX(-130%);
+  }
+  30%,
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zz-shine::after {
+    animation: none;
+    display: none;
+  }
+}
