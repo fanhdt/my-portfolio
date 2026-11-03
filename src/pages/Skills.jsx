@@ -263,16 +263,17 @@ const Skills = () => {
         <p className="mt-2 font-body text-[10px] font-bold uppercase tracking-[0.25em] opacity-60">Klik untuk detail</p>
       </div>
 
-      {/* Desktop: satu layar. Hp/tablet: scroll di dalam kartu */}
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] lg:overflow-y-hidden">
-        <div className="flex min-h-full flex-col lg:h-full lg:min-h-0">
+      {/* Selalu satu layar (tanpa scroll), di HP maupun desktop */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="flex h-full min-h-0 flex-col">
           {/* HEADER + TABS */}
-          <header className="flex shrink-0 flex-col gap-4 p-6 pb-4 sm:p-8 sm:pb-4 md:pl-28 lg:flex-row lg:items-end lg:justify-between lg:pr-12 lg:pt-8">
+          <header className="flex shrink-0 flex-col gap-3 p-4 pb-3 sm:gap-4 sm:p-8 sm:pb-4 md:pl-28 lg:flex-row lg:items-end lg:justify-between lg:pr-12 lg:pt-8">
             <div>
               <h1 className="s-scr zz-rgb font-display uppercase leading-[0.85] tracking-wide" data-text="Skills" style={{ fontSize: "clamp(2.25rem, min(9vh, 12vw), 4.5rem)" }}>
                 Skills
               </h1>
-              <p className="mt-2 max-w-md font-body text-xs text-neutral-400 sm:text-sm">Arahkan kursor untuk memperlambat. Klik sebuah teknologi untuk membuka detailnya.</p>
+              {/* petunjuk hover tidak relevan di layar sentuh, disembunyikan di HP */}
+              <p className="mt-2 hidden max-w-md font-body text-xs text-neutral-400 sm:block sm:text-sm">Arahkan kursor untuk memperlambat. Klik sebuah teknologi untuk membuka detailnya.</p>
             </div>
 
             <div role="tablist" aria-label="Skill categories" className="flex flex-wrap gap-2">
@@ -294,7 +295,7 @@ const Skills = () => {
           </header>
 
           {/* BARIS MARQUEE: satu baris per grup */}
-          <div className="relative mb-4 flex min-h-0 flex-1 flex-col border-b border-white/10 md:ml-28 lg:mb-6">
+          <div className="relative mb-3 flex min-h-0 flex-1 flex-col border-b border-white/10 md:ml-28 lg:mb-6">
             {groups.length === 0 && <p className="p-6 font-body text-sm text-neutral-400">Belum ada data.</p>}
 
             {groups.map(({ title, icon: Icon, items }, i) => {
@@ -305,7 +306,7 @@ const Skills = () => {
               return (
                 <div
                   key={`${tab}-${title}`}
-                  className="skill-row relative min-h-24 flex-1 border-t border-white/10 transition-colors hover:bg-white/[0.03]"
+                  className="skill-row relative min-h-0 flex-1 border-t border-white/10 transition-colors hover:bg-white/[0.03] lg:min-h-24"
                   onMouseEnter={() => slowRow(i, 0.06)}
                   onMouseLeave={() => slowRow(i, 1)}
                   onFocus={() => slowRow(i, 0.06)}
@@ -368,9 +369,14 @@ const Skills = () => {
               );
             })}
 
-            {/* PANEL DETAIL */}
+            {/* PANEL DETAIL: bottom sheet di HP, panel samping di desktop */}
             {isOpen && (
-              <aside ref={panelRef} aria-live="polite" className="absolute inset-y-0 right-0 z-40 w-[min(28rem,100%)] bg-lime-300 text-neutral-900" style={{ clipPath: CLIP_SHOWN }}>
+              <aside
+                ref={panelRef}
+                aria-live="polite"
+                className="absolute inset-y-0 right-0 z-40 w-[min(28rem,100%)] bg-lime-300 text-neutral-900 max-lg:inset-y-auto max-lg:bottom-0 max-lg:h-[75%] max-lg:w-full"
+                style={{ clipPath: CLIP_SHOWN }}
+              >
                 {/* garis pindai CRT di atas panel */}
                 <div aria-hidden className="zz-scanlines pointer-events-none absolute inset-0 opacity-40" />
 
@@ -383,12 +389,12 @@ const Skills = () => {
                   <X className="size-4" />
                 </button>
 
-                <div className="flex h-full flex-col justify-center gap-4 overflow-x-hidden overflow-y-auto p-6 pl-[18%] sm:pl-[22%]">
+                <div className="flex h-full flex-col justify-center gap-2.5 overflow-x-hidden overflow-y-auto p-5 pl-[16%] sm:gap-4 sm:p-6 lg:pl-[22%]">
                   <span className="panel-item font-body text-[10px] font-bold uppercase tracking-[0.3em] opacity-60">{selectedGroup?.title}</span>
 
                   <div className="panel-item">
-                    <div className="panel-icon flex size-14 items-center justify-center rounded-xl bg-neutral-900 text-lime-300">
-                      <TechIcon name={selected} className="size-7" />
+                    <div className="panel-icon flex size-10 items-center justify-center rounded-xl bg-neutral-900 text-lime-300 sm:size-14">
+                      <TechIcon name={selected} className="size-5 sm:size-7" />
                     </div>
                   </div>
 
@@ -399,7 +405,7 @@ const Skills = () => {
                     </h2>
                   </div>
 
-                  <p className="panel-item font-body text-sm font-semibold leading-relaxed">{SKILL_INFO[selected] ?? "Teknologi yang saya gunakan dan pelajari."}</p>
+                  <p className="panel-item font-body text-xs font-semibold leading-relaxed sm:text-sm">{SKILL_INFO[selected] ?? "Teknologi yang saya gunakan dan pelajari."}</p>
 
                   <div className="panel-item flex flex-wrap items-center gap-2">
                     <span className="font-body text-[10px] font-bold uppercase tracking-[0.3em] opacity-60">Dipakai di</span>

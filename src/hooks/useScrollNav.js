@@ -22,12 +22,15 @@ const canScroll = (el, dir) => {
   return false;
 };
 
-export const useScrollNav = () => {
+// enabled = false -> semua listener (wheel & swipe) tidak dipasang
+export const useScrollNav = ({ enabled = true } = {}) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const busy = useRef(false);
 
   useEffect(() => {
+    if (!enabled) return; // mobile: scroll-nav dimatikan
+
     const index = NAV_ITEMS.findIndex((i) => i.path === pathname);
     if (index === -1) return; // halaman detail: tidak pakai scroll-nav
 
@@ -71,5 +74,5 @@ export const useScrollNav = () => {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchend", onTouchEnd);
     };
-  }, [pathname, navigate]);
+  }, [pathname, navigate, enabled]);
 };
