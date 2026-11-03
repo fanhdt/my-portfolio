@@ -43,7 +43,7 @@ const Home = () => {
       <div aria-hidden className="absolute inset-y-0 right-0 hidden w-[62%] bg-lime-300 lg:block [clip-path:url(#hero-shape-clip)]" />
 
       <div data-art aria-hidden className="absolute inset-0 overflow-hidden lg:left-auto lg:w-[56%] lg:[clip-path:url(#hero-clip)]">
-        <img data-depth="22" src={IMAGES_DATA[0].src} alt="" className="size-full scale-110 object-cover object-[70%_top]" />
+        <img src={IMAGES_DATA[0].src} alt="" className="size-full object-cover object-[70%_top]" />
       </div>
 
       <div aria-hidden className="absolute inset-0 bg-linear-to-t from-black via-black/70 to-transparent lg:hidden" />
