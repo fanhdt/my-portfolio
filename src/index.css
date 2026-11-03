@@ -113,6 +113,135 @@
   --font-manrope: "Manrope", sans-serif;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  /* area root tidak dianimasikan, hanya wrapper "page" */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  /* potong halaman yang meluncur supaya tidak menimpa navbar */
+  ::view-transition-group(page) {
+    overflow: clip;
+  }
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    mix-blend-mode: normal;
+    animation-fill-mode: both;
+  }
+
+  /* ----- MASUK (dengan bounce) ----- */
+  html[data-nav="down"]::view-transition-new(page) {
+    animation: in-bottom 0.75s ease-out;
+  }
+  html[data-nav="up"]::view-transition-new(page) {
+    animation: in-top 0.75s ease-out;
+  }
+  html[data-nav="right"]::view-transition-new(page) {
+    animation: in-right 0.75s ease-out;
+  }
+  html[data-nav="left"]::view-transition-new(page) {
+    animation: in-left 0.75s ease-out;
+  }
+
+  /* ----- KELUAR ----- */
+  html[data-nav="down"]::view-transition-old(page) {
+    animation: out-top 0.35s ease-in;
+  }
+  html[data-nav="up"]::view-transition-old(page) {
+    animation: out-bottom 0.35s ease-in;
+  }
+  html[data-nav="right"]::view-transition-old(page) {
+    animation: out-left 0.35s ease-in;
+  }
+  html[data-nav="left"]::view-transition-old(page) {
+    animation: out-right 0.35s ease-in;
+  }
+}
+
+@keyframes in-bottom {
+  0% {
+    transform: translateY(100%);
+  }
+  65% {
+    transform: translateY(-4%);
+  }
+  82% {
+    transform: translateY(1.5%);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes in-top {
+  0% {
+    transform: translateY(-100%);
+  }
+  65% {
+    transform: translateY(4%);
+  }
+  82% {
+    transform: translateY(-1.5%);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes in-right {
+  0% {
+    transform: translateX(100%);
+  }
+  65% {
+    transform: translateX(-4%);
+  }
+  82% {
+    transform: translateX(1.5%);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes in-left {
+  0% {
+    transform: translateX(-100%);
+  }
+  65% {
+    transform: translateX(4%);
+  }
+  82% {
+    transform: translateX(-1.5%);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes out-top {
+  to {
+    transform: translateY(-40%);
+    opacity: 0;
+  }
+}
+@keyframes out-bottom {
+  to {
+    transform: translateY(40%);
+    opacity: 0;
+  }
+}
+@keyframes out-left {
+  to {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+}
+@keyframes out-right {
+  to {
+    transform: translateX(40%);
+    opacity: 0;
+  }
+}
+
 :root {
   --bar: #111214;
   --btn: #1a1b1f;

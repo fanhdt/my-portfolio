@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { NAV_ITEMS } from "../data/navItems";
 import { useActiveNav } from "../hooks/useActiveNav";
+import { setDirection } from "../lib/transition";
 
 const Navbar = () => {
   const { index, total } = useActiveNav();
@@ -35,11 +36,11 @@ const Navbar = () => {
         <span aria-hidden className="pointer-events-none absolute top-0 z-10 size-14 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--btn) ring-1 ring-white/5 sm:top-full" style={{ left: "var(--cx)", opacity: index === -1 ? 0 : 1 }} />
 
         <ul className="relative flex h-16 list-none px-6 sm:h-20">
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.map((item, i) => {
             const Icon = item.icon;
             return (
               <li key={item.path} className="flex-1">
-                <NavLink to={item.path} end={item.path === "/"} className="group relative z-20 flex h-full w-full items-center justify-center">
+                <NavLink to={item.path} end={item.path === "/"} viewTransition onClick={() => setDirection(i > index ? "down" : "up")} className="group relative z-20 flex h-full w-full items-center justify-center">
                   {({ isActive }) => (
                     <>
                       <Icon className={`size-6 transition-all duration-500 ${isActive ? "-translate-y-8 text-lime-300 sm:translate-y-10" : "text-white hover:text-lime-200"}`} />

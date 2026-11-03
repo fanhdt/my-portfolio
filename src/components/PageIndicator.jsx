@@ -2,6 +2,7 @@ import { useActiveNav } from "../hooks/useActiveNav";
 import { NAV_ITEMS } from "../data/navItems";
 import { useNavigate } from "react-router";
 import { ArrowDownToLine, ArrowUpToLine } from "lucide-react";
+import { setDirection } from "../lib/transition";
 
 const buttonBase = "flex size-12 items-center justify-center rounded-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)] enabled:hover:scale-110 enabled:active:scale-95 disabled:cursor-not-allowed disabled:opacity-40";
 
@@ -15,8 +16,18 @@ const PageIndicator = () => {
   const next = NAV_ITEMS[index + 1];
 
   return (
-    <div className="absolute bottom-0 left-0 z-30 hidden h-80 w-16 flex-col items-center gap-4 rounded-2xl bg-(--bar) p-2 md:flex">
-      <button type="button" aria-label="Halaman sebelumnya" disabled={!prev} onClick={() => prev && navigate(prev.path)} className={`${buttonBase} bg-white/20 text-white enabled:hover:bg-white enabled:hover:text-black`}>
+    <div className="absolute bottom-0 left-0 z-30 hidden h-80 w-16 flex-col items-center gap-4 rounded-2xl bg-(--bar) p-2 md:flex" style={{ viewTransitionName: "indicator" }}>
+      <button
+        type="button"
+        aria-label="Halaman sebelumnya"
+        disabled={!prev}
+        onClick={() => {
+          if (!prev) return;
+          setDirection("up");
+          navigate(prev.path, { viewTransition: true });
+        }}
+        className={`${buttonBase} bg-white/20 text-white enabled:hover:bg-white enabled:hover:text-black`}
+      >
         <ArrowUpToLine />
       </button>
 
@@ -28,7 +39,17 @@ const PageIndicator = () => {
         </div>
       </div>
 
-      <button type="button" aria-label="Halaman berikutnya" disabled={!next} onClick={() => next && navigate(next.path)} className={`${buttonBase} bg-lime-300 text-black enabled:hover:bg-lime-200`}>
+      <button
+        type="button"
+        aria-label="Halaman berikutnya"
+        disabled={!next}
+        onClick={() => {
+          if (!next) return;
+          setDirection("down");
+          navigate(next.path, { viewTransition: true });
+        }}
+        className={`${buttonBase} bg-lime-300 text-black enabled:hover:bg-lime-200`}
+      >
         <ArrowDownToLine />
       </button>
     </div>
