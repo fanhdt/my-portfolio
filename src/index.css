@@ -9,11 +9,45 @@
   font-display: swap;
 }
 
+@theme {
+  --font-display: "main-font", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-main: "main-font", sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+}
+
 @property --cx {
   syntax: "<length-percentage>";
   inherits: true;
   initial-value: 0px;
 }
+
+/* warna latar halaman: bisa dianimasikan antar halaman */
+@property --page {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f5f5f5;
+}
+
+:root {
+  --bar: #111214;
+  --btn: #1a1b1f;
+  --page: #f5f5f5;
+  --accent: #a3e635;
+  transition: --page 0.7s ease;
+}
+
+html,
+body {
+  overflow-x: clip;
+  background: var(--page);
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+}
+
+/* ===================== KEYFRAMES UI ===================== */
 
 /* desktop: tooltip di bawah */
 @keyframes tooltip-bounce {
@@ -87,6 +121,7 @@
     transform: none;
   }
 }
+
 @keyframes slide-in {
   from {
     opacity: 0;
@@ -97,6 +132,7 @@
     transform: none;
   }
 }
+
 @keyframes pop {
   from {
     opacity: 0;
@@ -108,10 +144,7 @@
   }
 }
 
-@theme {
-  --font-main: "main-font", sans-serif;
-  --font-manrope: "Manrope", sans-serif;
-}
+/* ===================== SLASH REVEAL (page transition) ===================== */
 
 @media (prefers-reduced-motion: no-preference) {
   /* area root tidak dianimasikan, hanya wrapper "page" */
@@ -121,139 +154,118 @@
     mix-blend-mode: normal;
   }
 
-  /* potong halaman yang meluncur supaya tidak menimpa navbar */
+  /* potong semua yang bergerak di dalam kartu; warna aksen mengisi celah */
   ::view-transition-group(page) {
     overflow: clip;
+    border-radius: 1rem;
+    background: var(--accent);
+    animation-duration: 0.9s;
   }
+
   ::view-transition-old(page),
   ::view-transition-new(page) {
-    mix-blend-mode: normal;
+    animation-duration: 0.9s;
+    animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
     animation-fill-mode: both;
+    mix-blend-mode: normal;
   }
 
-  /* ----- MASUK (dengan bounce) ----- */
+  /* indikator ikut bergerak halus */
+  ::view-transition-group(indicator) {
+    animation-duration: 0.9s;
+    animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  /* ---- DOWN (next): halaman baru naik dari bawah ---- */
   html[data-nav="down"]::view-transition-new(page) {
-    animation: in-bottom 0.75s ease-out;
+    animation-name: reveal-from-bottom;
   }
-  html[data-nav="up"]::view-transition-new(page) {
-    animation: in-top 0.75s ease-out;
-  }
-  html[data-nav="right"]::view-transition-new(page) {
-    animation: in-right 0.75s ease-out;
-  }
-  html[data-nav="left"]::view-transition-new(page) {
-    animation: in-left 0.75s ease-out;
+  html[data-nav="down"]::view-transition-old(page) {
+    animation-name: push-up;
   }
 
-  /* ----- KELUAR ----- */
-  html[data-nav="down"]::view-transition-old(page) {
-    animation: out-top 0.35s ease-in;
+  /* ---- UP (prev): halaman baru turun dari atas ---- */
+  html[data-nav="up"]::view-transition-new(page) {
+    animation-name: reveal-from-top;
   }
   html[data-nav="up"]::view-transition-old(page) {
-    animation: out-bottom 0.35s ease-in;
+    animation-name: push-down;
+  }
+
+  /* ---- RIGHT: halaman baru masuk dari kanan ---- */
+  html[data-nav="right"]::view-transition-new(page) {
+    animation-name: reveal-from-right;
   }
   html[data-nav="right"]::view-transition-old(page) {
-    animation: out-left 0.35s ease-in;
+    animation-name: push-left;
+  }
+
+  /* ---- LEFT: halaman baru masuk dari kiri ---- */
+  html[data-nav="left"]::view-transition-new(page) {
+    animation-name: reveal-from-left;
   }
   html[data-nav="left"]::view-transition-old(page) {
-    animation: out-right 0.35s ease-in;
+    animation-name: push-right;
   }
 }
 
-@keyframes in-bottom {
-  0% {
-    transform: translateY(100%);
+@keyframes reveal-from-bottom {
+  from {
+    clip-path: polygon(0 124%, 100% 100%, 100% 100%, 0 100%);
   }
-  65% {
-    transform: translateY(-4%);
-  }
-  82% {
-    transform: translateY(1.5%);
-  }
-  100% {
-    transform: none;
-  }
-}
-@keyframes in-top {
-  0% {
-    transform: translateY(-100%);
-  }
-  65% {
-    transform: translateY(4%);
-  }
-  82% {
-    transform: translateY(-1.5%);
-  }
-  100% {
-    transform: none;
-  }
-}
-@keyframes in-right {
-  0% {
-    transform: translateX(100%);
-  }
-  65% {
-    transform: translateX(-4%);
-  }
-  82% {
-    transform: translateX(1.5%);
-  }
-  100% {
-    transform: none;
-  }
-}
-@keyframes in-left {
-  0% {
-    transform: translateX(-100%);
-  }
-  65% {
-    transform: translateX(4%);
-  }
-  82% {
-    transform: translateX(-1.5%);
-  }
-  100% {
-    transform: none;
-  }
-}
-
-@keyframes out-top {
   to {
-    transform: translateY(-40%);
-    opacity: 0;
-  }
-}
-@keyframes out-bottom {
-  to {
-    transform: translateY(40%);
-    opacity: 0;
-  }
-}
-@keyframes out-left {
-  to {
-    transform: translateX(-40%);
-    opacity: 0;
-  }
-}
-@keyframes out-right {
-  to {
-    transform: translateX(40%);
-    opacity: 0;
+    clip-path: polygon(0 0, 100% -24%, 100% 100%, 0 100%);
   }
 }
 
-:root {
-  --bar: #111214;
-  --btn: #1a1b1f;
-  --page: #f5f5f5;
+@keyframes reveal-from-top {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 -24%);
+  }
+  to {
+    clip-path: polygon(0 124%, 100% 100%, 100% 0, 0 0);
+  }
 }
 
-html,
-body {
-  overflow-x: clip;
-  background: var(--page);
+@keyframes reveal-from-right {
+  from {
+    clip-path: polygon(124% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, -24% 100%);
+  }
 }
 
-body {
-  font-family: "main-font", sans-serif;
+@keyframes reveal-from-left {
+  from {
+    clip-path: polygon(0 0, 0 0, -24% 100%, 0 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 124% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes push-up {
+  to {
+    transform: translateY(-14%) scale(0.95);
+    filter: brightness(0.5);
+  }
+}
+@keyframes push-down {
+  to {
+    transform: translateY(14%) scale(0.95);
+    filter: brightness(0.5);
+  }
+}
+@keyframes push-left {
+  to {
+    transform: translateX(-14%) scale(0.95);
+    filter: brightness(0.5);
+  }
+}
+@keyframes push-right {
+  to {
+    transform: translateX(14%) scale(0.95);
+    filter: brightness(0.5);
+  }
 }

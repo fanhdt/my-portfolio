@@ -27,11 +27,12 @@ const LINKS = [
 
 const Contact = () => {
   const formRef = useRef(null);
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (status === "sending") return;
 
     if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
@@ -42,26 +43,34 @@ const Contact = () => {
 
     const data = new FormData(formRef.current);
 
-    // honeypot anti-spam: bot biasanya mengisi field tersembunyi ini
+    // Honeypot anti-spam
     if (data.get("website")) return;
 
     setStatus("sending");
+    setErrorMsg("");
+
     try {
       await emailjs.send(
         SERVICE_ID,
         TEMPLATE_ID,
         {
-          from_name: data.get("name"),
-          from_email: data.get("email"),
+          // Harus sama dengan variable di EmailJS Template
+          name: data.get("name"),
+          email: data.get("email"),
           subject: data.get("subject"),
           message: data.get("message"),
         },
-        { publicKey: PUBLIC_KEY },
+        {
+          publicKey: PUBLIC_KEY,
+        },
       );
+
       formRef.current.reset();
       setStatus("success");
-    } catch {
-      setErrorMsg("Something went wrong. Please try again.");
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+
+      setErrorMsg("Failed to send your message. Please try again later.");
       setStatus("error");
     }
   };
@@ -70,15 +79,17 @@ const Contact = () => {
 
   return (
     <section className="relative h-full overflow-hidden rounded-2xl bg-(--bar) text-white">
-      {/* dekorasi latar */}
+      {/* Dekorasi latar */}
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
 
       {/* VISUAL KANAN (desktop) */}
       <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] lg:block">
         <div className="absolute inset-0 bg-lime-300 [clip-path:polygon(24%_0,100%_0,100%_100%,0_100%)]" />
+
         <div className="absolute inset-y-0 right-0 w-[92%] [clip-path:polygon(22%_0,100%_0,100%_100%,0_100%)]">
           <img src={IMAGES_DATA[0].src} alt="" className="size-full object-cover object-[70%_top]" />
         </div>
+
         <div className="absolute left-[18%] top-10 size-2.5 bg-sky-200" />
         <div className="absolute bottom-16 left-[8%] size-2.5 rotate-45 bg-pink-400" />
         <div className="absolute right-8 top-8 h-px w-24 bg-white/40" />
@@ -86,7 +97,7 @@ const Contact = () => {
 
       <PageNotch />
 
-      {/* Desktop: satu layar. Hp/tablet: scroll di dalam kartu */}
+      {/* Desktop: satu layar. HP/tablet: scroll di dalam kartu */}
       <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] lg:overflow-y-hidden">
         <div className="relative z-10 flex min-h-full flex-col gap-4 p-6 sm:p-8 md:pl-28 lg:h-full lg:min-h-0 lg:gap-3 lg:pb-6 lg:pl-28 lg:pr-12 lg:pt-8">
           <div className="lg:max-w-[52%]">
@@ -96,17 +107,26 @@ const Contact = () => {
               Contact
               <span className="h-px w-12 bg-white/30" />
             </div>
-            <h1 className="mt-2 font-display uppercase leading-[0.9] tracking-wide" style={{ fontSize: "clamp(1.75rem, min(6.5vh, 8vw), 3.5rem)" }}>
+
+            <h1
+              className="mt-2 font-display uppercase leading-[0.9] tracking-wide"
+              style={{
+                fontSize: "clamp(1.75rem, min(6.5vh, 8vw), 3.5rem)",
+              }}
+            >
               Ready to build
               <br />
               <span className="text-lime-300">something?</span>
             </h1>
+
             <p className="mt-2 font-body text-sm text-neutral-300 sm:text-base">Let&apos;s create something meaningful together.</p>
 
             {/* STATUS */}
             <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-body">
               <span className="text-xs font-extrabold uppercase tracking-wider">Mochamad Irfan Hidayat</span>
+
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-400">Fullstack Developer</span>
+
               <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em] text-lime-300">
                 <span className="size-2 rounded-full bg-lime-300" />
                 Open to opportunities
@@ -116,37 +136,47 @@ const Contact = () => {
             {/* FORM */}
             <form ref={formRef} onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3 lg:mt-3 lg:gap-2.5">
               <div className="grid gap-3 sm:grid-cols-2 lg:gap-2.5">
+                {/* NAME */}
                 <div>
                   <label htmlFor="name" className={LABEL}>
                     Name
                   </label>
+
                   <input id="name" name="name" type="text" required autoComplete="name" placeholder="Your name" disabled={sending} className={FIELD} />
                 </div>
+
+                {/* EMAIL */}
                 <div>
                   <label htmlFor="email" className={LABEL}>
                     Email
                   </label>
+
                   <input id="email" name="email" type="email" required autoComplete="email" placeholder="your@email.com" disabled={sending} className={FIELD} />
                 </div>
               </div>
 
+              {/* SUBJECT */}
               <div>
                 <label htmlFor="subject" className={LABEL}>
                   Subject
                 </label>
+
                 <input id="subject" name="subject" type="text" required placeholder="What would you like to talk about?" disabled={sending} className={FIELD} />
               </div>
 
+              {/* MESSAGE */}
               <div>
                 <label htmlFor="message" className={LABEL}>
                   Message
                 </label>
+
                 <textarea id="message" name="message" required rows={3} placeholder="Tell me about your project..." disabled={sending} className={`${FIELD} resize-none`} />
               </div>
 
-              {/* honeypot (tersembunyi dari pengguna) */}
+              {/* Honeypot anti-spam */}
               <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
 
+              {/* SUBMIT */}
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <button
                   type="submit"
@@ -154,6 +184,7 @@ const Contact = () => {
                   className="group inline-flex items-center gap-3 rounded-full bg-lime-300 px-6 py-3 font-body text-sm font-bold uppercase tracking-widest text-neutral-900 transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-300 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {sending ? "Sending..." : "Send message"}
+
                   {!sending && (
                     <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -161,8 +192,10 @@ const Contact = () => {
                   )}
                 </button>
 
+                {/* STATUS */}
                 <p role="status" aria-live="polite" className="font-body text-xs">
                   {status === "success" && <span className="text-lime-300">Message sent successfully.</span>}
+
                   {status === "error" && (
                     <span role="alert" className="text-pink-400">
                       {errorMsg}
@@ -192,9 +225,10 @@ const Contact = () => {
             )}
           </div>
 
-          {/* GAMBAR (hp/tablet, di bawah form) */}
+          {/* GAMBAR HP/TABLET */}
           <div className="relative mt-2 h-48 shrink-0 overflow-hidden rounded-2xl sm:h-64 lg:hidden">
             <div aria-hidden className="absolute inset-0 bg-lime-300" />
+
             <img src={IMAGES_DATA[0].src} alt="" className="absolute inset-y-0 right-0 h-full w-[88%] object-cover object-[70%_top] [clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]" />
           </div>
         </div>

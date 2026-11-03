@@ -31,7 +31,7 @@ const PageIndicator = () => {
         <ArrowUpToLine />
       </button>
 
-      <div className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden">
+      <div className="flex min-h-0 w-full flex-1 items-center font-main justify-center overflow-hidden">
         <div key={item.label} className="max-h-full animate-[title-bounce_0.6s_ease-out_both]">
           <span className="block max-h-full rotate-180 truncate text-xl font-bold uppercase tracking-widest text-lime-200" style={{ writingMode: "vertical-rl" }}>
             {item.label}

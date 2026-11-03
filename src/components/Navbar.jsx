@@ -9,9 +9,9 @@ const Navbar = () => {
   const cx = index === -1 ? "-200px" : `calc(24px + (100% - 48px) * ${(index + 0.5) / total})`;
 
   return (
-    <nav className="flex flex-col gap-4 px-4 pt-6 max-sm:pb-4 sm:flex-row pb-8 ">
+    <nav className="flex flex-col gap-4 px-4 pt-6 max-sm:pb-4 sm:flex-row sm:pb-8">
       <div className="flex h-20 flex-1 items-center gap-4 rounded-2xl bg-(--bar) px-6 py-2 md:py-0">
-        <span className="truncate text-2xl md:text-3xl font-bold italic uppercase tracking-widest text-white">My Portfolio</span>
+        <span className="truncate text-2xl md:text-3xl font-bold italic uppercase tracking-widest text-white font-main">My Portfolio</span>
       </div>
 
       <div
