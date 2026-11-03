@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { Mail } from "lucide-react";
 import PageNotch from "../components/PageNotch";
-import { IMAGES_DATA } from "../data/imageData";
+import { IMAGES } from "../data/imageData";
 import { CONTACT } from "../data/contactData";
 
 gsap.registerPlugin(useGSAP);
@@ -171,12 +171,12 @@ const Contact = () => {
     { scope: rootRef },
   );
 
-  const img = IMAGES_DATA[0].src;
+  const img = IMAGES.hero;
 
   return (
     <section ref={rootRef} className="relative h-full overflow-hidden rounded-2xl bg-(--bar) text-white">
       {/* Dekorasi latar */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] mask-[linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
 
       {/* VISUAL KANAN (desktop) */}
       <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] overflow-hidden lg:block">
@@ -190,16 +190,16 @@ const Contact = () => {
           </div>
           <div className="zz-scanlines absolute inset-0" />
           <div className="zz-sweepline absolute inset-0 overflow-hidden" />
-        </div>
 
-        {/* pita marquee miring */}
-        <div className="c-band absolute -left-10 -right-10 bottom-14 -rotate-6 overflow-hidden bg-lime-300 py-2 text-neutral-900">
-          <div className="zz-marquee font-display text-xl uppercase tracking-wider">
-            {[0, 1].map((n) => (
-              <span key={n} className="shrink-0 whitespace-pre pr-0">
-                {MARQUEE.repeat(3)}
-              </span>
-            ))}
+          {/* pita marquee miring: di dalam wadah ber-clip, jadi ujung kirinya menyelip di balik garis hijau */}
+          <div className="c-band absolute -left-16 -right-10 bottom-14 -rotate-6 overflow-hidden bg-lime-300 py-2 text-neutral-900">
+            <div className="zz-marquee font-display text-xl uppercase tracking-wider">
+              {[0, 1].map((n) => (
+                <span key={n} className="shrink-0 whitespace-pre pr-0">
+                  {MARQUEE.repeat(3)}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -236,14 +236,14 @@ const Contact = () => {
       )}
 
       {/* Desktop: satu layar. HP/tablet: scroll di dalam kartu */}
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] lg:overflow-y-hidden">
+      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-none lg:overflow-y-hidden">
         <div className="relative z-10 flex min-h-full flex-col gap-4 p-6 sm:p-8 md:pl-28 lg:h-full lg:min-h-0 lg:gap-3 lg:pb-6 lg:pl-28 lg:pr-12 lg:pt-8">
           <div className="lg:max-w-[52%]">
             {/* HEADER */}
             <div className="flex items-center gap-3 font-body text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400 sm:text-xs">
               <span className="size-2.5 bg-lime-300" />
-              <span className="c-scr zz-caret" data-text="CH-04 // Incoming transmission">
-                CH-04 // Incoming transmission
+              <span className="c-scr zz-caret" data-text="Incoming transmission">
+                Incoming transmission
               </span>
             </div>
 

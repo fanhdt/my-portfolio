@@ -3,7 +3,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { GraduationCap, MapPin, BadgeCheck, Code2, Compass } from "lucide-react";
 import PageNotch from "../components/PageNotch";
-import { IMAGES_DATA } from "../data/imageData";
+import { IMAGES } from "../data/imageData";
+import { STAT_GROUPS, averageLevel } from "../data/skillsData";
 
 gsap.registerPlugin(useGSAP);
 
@@ -21,41 +22,7 @@ const FACTS = [
   { icon: Compass, label: "Exploring", lines: ["AI Integration / DevOps"], word: "AI OPS" },
 ];
 
-// Sumber tunggal statistik. Nilai 0-100 per teknologi (contoh, ganti sesuai penilaianmu).
-// Mode Simple memakai rata-rata tiap grup, mode Detail menampilkan tiap teknologi.
-const STAT_GROUPS = [
-  {
-    label: "Frontend",
-    items: [
-      { name: "HTML", value: 95 },
-      { name: "CSS", value: 90 },
-      { name: "JavaScript", value: 88 },
-      { name: "React", value: 90 },
-      { name: "Vue", value: 86 },
-      { name: "Next.js", value: 80 },
-    ],
-  },
-  {
-    label: "Backend",
-    items: [
-      { name: "Node.js", value: 82 },
-      { name: "Express", value: 80 },
-      { name: "PHP", value: 70 },
-      { name: "Laravel", value: 80 },
-      { name: "Database", value: 70 },
-    ],
-  },
-  { label: "Mobile", items: [{ name: "React Native", value: 60 }] },
-  {
-    label: "DevOps",
-    items: [
-      { name: "Docker", value: 50 },
-      { name: "CI/CD", value: 40 },
-    ],
-  },
-];
-
-const average = (items) => Math.round(items.reduce((sum, it) => sum + it.value, 0) / items.length);
+// Data statistik (STAT_GROUPS) dan averageLevel sekarang ada di data/skillsData.js
 
 const MODES = [
   { id: "simple", label: "Simple" },
@@ -64,7 +31,7 @@ const MODES = [
 
 // ganti ke true kalau fotonya PNG transparan (tanpa latar), supaya tidak dipotong bentuk
 const PHOTO_IS_CUTOUT = false;
-const PHOTO_SRC = IMAGES_DATA[0].src;
+const PHOTO_SRC = IMAGES.hero;
 
 // kelas bentuk foto dipakai ulang oleh salinan glitch dan lapisan scanline
 const PHOTO_SHAPE = PHOTO_IS_CUTOUT ? "" : "[clip-path:polygon(9%_0,100%_0,100%_100%,0_100%,0_7%)]";
@@ -269,13 +236,13 @@ const About = () => {
   return (
     <section ref={rootRef} className="relative h-full overflow-hidden rounded-2xl bg-(--bar) text-white">
       {/* BACKGROUND TEKNIS */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]" style={DOTS} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] mask-[linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)]" style={DOTS} />
       <Cross className="pointer-events-none absolute bottom-24 left-[36%] hidden text-lime-300 opacity-70 lg:block" />
 
       <PageNotch />
 
       {/* AREA SCROLL (cadangan untuk layar kecil; di desktop semuanya satu layar) */}
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none]">
+      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-none">
         <div className="grid min-h-full lg:h-full lg:grid-cols-[minmax(0,23rem)_minmax(0,1fr)_minmax(0,19rem)]">
           {/* ZONA KIRI: IDENTITAS + FAKTA */}
           <div className="relative z-20 flex flex-col p-6 sm:p-8 lg:min-h-0 lg:py-12 lg:pl-10 lg:pr-0">
@@ -298,7 +265,7 @@ const About = () => {
               <p className="mt-3 max-w-sm font-body text-sm leading-relaxed text-neutral-300">Multimedia Education graduate building practical digital products across web, mobile, and interactive applications.</p>
             </div>
 
-            <dl className="mt-6 flex flex-col gap-1.5 lg:mt-auto" onMouseLeave={() => setActive(null)}>
+            <dl className="mt-6 md:ml-7 flex flex-col gap-1.5 lg:mt-auto" onMouseLeave={() => setActive(null)}>
               {FACTS.map(({ icon: Icon, label, lines, status }, i) => (
                 <div
                   key={label}
@@ -344,7 +311,7 @@ const About = () => {
             </div>
 
             {/* pita ticker berkontur di belakang foto, bergerak pelan */}
-            <div aria-hidden className="a-ticker pointer-events-none absolute -left-8 -right-8 bottom-[22%] z-[5] -rotate-6 overflow-hidden border-y border-white/15 py-1">
+            <div aria-hidden className="a-ticker pointer-events-none absolute -left-8 -right-8 bottom-[22%] z-5 -rotate-6 overflow-hidden border-y border-white/15 py-1">
               <div className="zz-marquee font-display text-lg uppercase tracking-widest text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.35)]">
                 {[0, 1].map((n) => (
                   <span key={n} className="shrink-0 whitespace-pre">
@@ -355,7 +322,7 @@ const About = () => {
             </div>
 
             {/* LAPISAN 2: foto sebagai karakter */}
-            <div data-layer="photo" className="absolute bottom-0 left-1/2 z-10 aspect-[3/4] h-[90%] -translate-x-1/2">
+            <div data-layer="photo" className="absolute bottom-0 left-1/2 z-10 aspect-3/4 h-[90%] -translate-x-1/2">
               <img ref={photoImgRef} src={PHOTO_SRC} alt="Mochamad Irfan Hidayat" className={`size-full object-cover object-[60%_top] ${PHOTO_SHAPE} ${PHOTO_FADE}`} />
 
               {/* salinan glitch: irisan bergeser berwarna */}
@@ -397,7 +364,7 @@ const About = () => {
 
           {/* ZONA KANAN: STATISTIK GAYA RPG (mode Simple / Detail) */}
           <aside className="relative z-20 p-6 pt-2 sm:p-8 sm:pt-2 lg:min-h-0 lg:py-12 lg:pl-0 lg:pr-8">
-            <div className="rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 lg:h-full lg:overflow-y-auto lg:[scrollbar-width:none]">
+            <div className="rounded-2xl p-5 ring-1 ring-white/10 lg:h-full lg:overflow-y-auto lg:scrollbar-none" style={{ background: "linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05)), var(--bar)" }}>
               <div className="mb-5 flex items-center justify-between gap-3">
                 <span className="stat-title font-body text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400" data-text="Player stats">
                   Player stats
@@ -424,7 +391,7 @@ const About = () => {
                 /* SIMPLE: satu bar per grup (rata-rata teknologinya) */
                 <ul key="simple" className="flex flex-col gap-5">
                   {STAT_GROUPS.map(({ label, items }) => {
-                    const value = average(items);
+                    const value = averageLevel(items);
                     return (
                       <li key={label} className="stat-row">
                         <div className="mb-1.5 flex items-end justify-between">
@@ -440,7 +407,7 @@ const About = () => {
                           aria-valuenow={value}
                           aria-valuemin={0}
                           aria-valuemax={100}
-                          className="h-3 -skew-x-12 overflow-hidden bg-white/10 [mask-image:repeating-linear-gradient(90deg,#000_0_9px,transparent_9px_12px)]"
+                          className="h-3 -skew-x-12 overflow-hidden bg-white/10 mask-[repeating-linear-gradient(90deg,#000_0_9px,transparent_9px_12px)]"
                         >
                           <div className="stat-fill zz-shine h-full origin-left bg-lime-300" data-value={value} style={{ transform: "scaleX(0)" }} />
                         </div>
@@ -467,7 +434,7 @@ const About = () => {
                               aria-valuenow={value}
                               aria-valuemin={0}
                               aria-valuemax={100}
-                              className="h-2 -skew-x-12 overflow-hidden bg-white/10 [mask-image:repeating-linear-gradient(90deg,#000_0_6px,transparent_6px_9px)]"
+                              className="h-2 -skew-x-12 overflow-hidden bg-white/10 mask-[repeating-linear-gradient(90deg,#000_0_9px,transparent_9px_12px)]"
                             >
                               <div className="stat-fill zz-shine h-full origin-left bg-lime-300" data-value={value} style={{ transform: "scaleX(0)" }} />
                             </div>

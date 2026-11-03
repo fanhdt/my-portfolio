@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Download } from "lucide-react";
-import { IMAGES_DATA } from "../data/imageData";
+import { IMAGES } from "../data/imageData";
 import PageNotch from "../components/PageNotch";
 
 gsap.registerPlugin(useGSAP);
@@ -135,7 +135,7 @@ const Home = () => {
     { scope: root },
   );
 
-  const art = IMAGES_DATA[0].src;
+  const art = IMAGES.hero;
   const artClass = "size-full object-cover object-[70%_top]";
 
   return (
@@ -163,16 +163,16 @@ const Home = () => {
         </div>
         <div className="zz-scanlines pointer-events-none absolute inset-0" />
         <div className="zz-sweepline pointer-events-none absolute inset-0 overflow-hidden" />
-      </div>
 
-      {/* pita marquee miring (desktop) */}
-      <div data-band aria-hidden className="pointer-events-none absolute -right-10 bottom-20 left-[44%] hidden -rotate-6 overflow-hidden bg-lime-300 py-2 text-neutral-900 lg:block">
-        <div className="zz-marquee font-display text-xl uppercase tracking-wider">
-          {[0, 1].map((n) => (
-            <span key={n} className="shrink-0 whitespace-pre">
-              {MARQUEE.repeat(3)}
-            </span>
-          ))}
+        {/* pita marquee miring (desktop): di dalam wadah ber-clip, jadi ujung kirinya menyelip di balik garis hijau */}
+        <div data-band aria-hidden className="pointer-events-none absolute -left-16 -right-10 bottom-20 hidden -rotate-6 overflow-hidden bg-lime-300 py-2 text-neutral-900 lg:block">
+          <div className="zz-marquee font-display text-xl uppercase tracking-wider">
+            {[0, 1].map((n) => (
+              <span key={n} className="shrink-0 whitespace-pre">
+                {MARQUEE.repeat(3)}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -187,7 +187,7 @@ const Home = () => {
 
       <PageNotch />
 
-      <div className="relative z-10 flex h-full flex-col overflow-y-auto overscroll-contain p-6 [scrollbar-width:none] sm:p-12 md:pl-24 lg:max-w-[46%] lg:px-16 lg:py-10 lg:pl-24 [&::-webkit-scrollbar]:hidden">
+      <div className="relative z-10 flex h-full flex-col overflow-y-auto overscroll-contain p-6 scrollbar-none sm:p-12 md:pl-24 lg:max-w-[46%] lg:px-16 lg:py-10 lg:pl-24 [&::-webkit-scrollbar]:hidden">
         <div className="mt-auto flex flex-col gap-4 lg:my-auto lg:gap-3">
           {/* status */}
           <p data-in className="flex items-center gap-2 font-body text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-300 sm:text-xs">

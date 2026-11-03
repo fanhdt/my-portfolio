@@ -63,7 +63,7 @@ const Frame = ({ project }) => {
   );
 
   if (project.category === "Mobile") {
-    return <div className="relative mx-auto aspect-9/16 h-full max-h-full max-w-[55%] overflow-hidden rounded-[2rem] border-[6px] border-neutral-900 bg-neutral-900 shadow-xl">{img}</div>;
+    return <div className="relative mx-auto aspect-9/16 h-full max-h-full max-w-[55%] overflow-hidden rounded-4xl border-[6px] border-neutral-900 bg-neutral-900 shadow-xl">{img}</div>;
   }
 
   if (project.category === "Web") {
@@ -192,20 +192,20 @@ const Projects = () => {
       </svg>
 
       {/* dekorasi latar */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] mask-[linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
 
       <PageNotch />
 
       {/* Desktop: tanpa scroll. Hp/tablet: scroll di dalam kartu */}
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] lg:overflow-y-hidden">
+      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-none lg:overflow-y-hidden">
         <div className="flex min-h-full flex-col gap-5 p-6 sm:p-8 md:pl-28 lg:h-full lg:min-h-0 lg:gap-4 lg:pb-6 lg:pl-28 lg:pr-12 lg:pt-8">
           {/* HEADER + FILTER */}
           <header className="flex shrink-0 flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <div className="flex items-center gap-3 font-body text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400 sm:text-xs">
                 <span className="size-2.5 bg-lime-300" />
-                <span className="p-scr zz-caret" data-text="04 / Works">
-                  04 / Works
+                <span className="p-scr zz-caret" data-text=" Works">
+                  Works
                 </span>
                 <span className="h-px w-12 bg-white/30" />
               </div>
@@ -218,7 +218,7 @@ const Projects = () => {
               </p>
             </div>
 
-            <div role="tablist" aria-label="Project categories" className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 lg:pb-0">
+            <div role="tablist" aria-label="Project categories" className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1 scrollbar-none sm:-mx-8 sm:px-8 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 lg:pb-0">
               {FILTERS.map((f) => (
                 <button
                   key={f}
@@ -240,7 +240,7 @@ const Projects = () => {
           {current ? (
             <div className="flex flex-col gap-6 lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)] lg:gap-10">
               {/* DAFTAR PROYEK (desktop): tiap proyek satu baris besar */}
-              <ul className="flex min-h-0 flex-col border-b border-white/15 max-lg:hidden lg:overflow-y-auto lg:[scrollbar-width:none]">
+              <ul className="flex min-h-0 flex-col border-b border-white/15 max-lg:hidden lg:overflow-y-auto lg:scrollbar-none">
                 {list.map((p, i) => {
                   const on = i === active;
                   return (
@@ -329,7 +329,7 @@ const Projects = () => {
                   </div>
 
                   {/* lembar sapuan */}
-                  {!reduce && <div ref={slabRef} aria-hidden className="pointer-events-none absolute inset-y-0 -left-[30%] z-20 w-[160%] bg-white [clip-path:polygon(15%_0,100%_0,85%_100%,0_100%)]" />}
+                  {!reduce && <div ref={slabRef} aria-hidden className="pointer-events-none absolute inset-y-0 left-[-30%] z-20 w-[160%] bg-white [clip-path:polygon(15%_0,100%_0,85%_100%,0_100%)]" />}
                 </div>
 
                 <div className="stage-info flex shrink-0 flex-col gap-2">
