@@ -58,7 +58,7 @@ export const PROJECTS = [
     slug: "balanja",
     title: "Balanja: Fullstack E-Commerce Platform",
     short: "Balanja",
-    category: "Mobile",
+    category: "Web & Mobile",
     description: "A fullstack e-commerce platform built with a modern JavaScript ecosystem. Balanja provides an integrated shopping experience through a web application and mobile app, supported by a REST API backend",
 
     image: getProjectCover("balanja") ?? IMAGES.hero,
