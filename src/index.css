@@ -43,6 +43,16 @@ body {
   background: var(--page);
 }
 
+/* Layar laptop yang tidak terlalu tinggi (mis. 1366x768, tinggi area browser ~600-700px):
+   semua ukuran Tailwind berbasis rem, jadi cukup perkecil root font-size
+   mengikuti tinggi layar agar satu halaman tetap muat tanpa terpotong.
+   Di tinggi >= 832px tetap 16px (tidak berubah). Mobile tidak terpengaruh. */
+@media (min-width: 1024px) and (max-height: 832px) {
+  html {
+    font-size: clamp(11.5px, calc(100vh / 52), 16px);
+  }
+}
+
 body {
   font-family: "Manrope", sans-serif;
 }

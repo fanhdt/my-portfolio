@@ -18,7 +18,7 @@ const FACTS = [
   { icon: GraduationCap, label: "Education", lines: ["Universitas Pendidikan Indonesia", "Pendidikan Multimedia"], word: "UPI" },
   { icon: MapPin, label: "Location", lines: ["Bandung, Indonesia"], word: "BANDUNG" },
   { icon: BadgeCheck, label: "Current status", lines: ["Available for opportunities"], word: "OPEN", status: true },
-  { icon: Code2, label: "Focus", lines: ["Web Development"], word: "WEB" },
+  { icon: Code2, label: "Focus", lines: ["Fullstack Development"], word: "WEB" },
   { icon: Compass, label: "Exploring", lines: ["AI Integration / DevOps"], word: "AI OPS" },
 ];
 
@@ -31,7 +31,9 @@ const MODES = [
 
 // ganti ke true kalau fotonya PNG transparan (tanpa latar), supaya tidak dipotong bentuk
 const PHOTO_IS_CUTOUT = false;
-const PHOTO_SRC = IMAGES.hero;
+// const PHOTO_SRC = IMAGES.hero;
+const PHOTO_PROFILE = IMAGES.profile;
+const PHOTO_BG = IMAGES.background;
 
 // kelas bentuk foto dipakai ulang oleh salinan glitch dan lapisan scanline
 const PHOTO_SHAPE = PHOTO_IS_CUTOUT ? "" : "[clip-path:polygon(9%_0,100%_0,100%_100%,0_100%,0_7%)]";
@@ -323,11 +325,11 @@ const About = () => {
 
             {/* LAPISAN 2: foto sebagai karakter */}
             <div data-layer="photo" className="absolute bottom-0 left-1/2 z-10 aspect-3/4 h-[90%] -translate-x-1/2">
-              <img ref={photoImgRef} src={PHOTO_SRC} alt="Mochamad Irfan Hidayat" className={`size-full object-cover object-[60%_top] ${PHOTO_SHAPE} ${PHOTO_FADE}`} />
+              <img ref={photoImgRef} src={PHOTO_PROFILE} alt="Mochamad Irfan Hidayat" className={`size-full object-cover object-[60%_top] ${PHOTO_SHAPE} ${PHOTO_FADE}`} />
 
               {/* salinan glitch: irisan bergeser berwarna */}
               {["zz-slice-a", "zz-slice-b"].map((c) => (
-                <img key={c} src={PHOTO_SRC} alt="" aria-hidden className={`${c} pointer-events-none absolute inset-0 size-full object-cover object-[60%_top] ${PHOTO_SHAPE} ${PHOTO_FADE}`} />
+                <img key={c} src={PHOTO_BG} alt="" aria-hidden className={`${c} pointer-events-none absolute inset-0 size-full object-cover object-[60%_top] ${PHOTO_SHAPE} ${PHOTO_FADE}`} />
               ))}
 
               {/* garis pindai + garis cahaya */}

@@ -5,21 +5,16 @@ import { useGSAP } from "@gsap/react";
 import { Download } from "lucide-react";
 import { IMAGES } from "../data/imageData";
 import PageNotch from "../components/PageNotch";
+import CV from "../assets/cv.pdf";
 
 gsap.registerPlugin(useGSAP);
 
-/* ===================== DATA ===================== */
-
-// menu utama ala layar judul game (sesuaikan path dengan routermu)
 const MENU = [
   { to: "/projects", label: "Projects", hint: "Selected works" },
   { to: "/skills", label: "Skills", hint: "Tech stack" },
   { to: "/about", label: "About", hint: "Who's playing" },
   { to: "/contact", label: "Contact", hint: "Open channel" },
 ];
-
-// Letakkan file CV di folder public/, lalu sesuaikan nama file di sini
-const CV = { href: "/cv.pdf", filename: "Mochamad_Irfan_Hidayat_CV.pdf" };
 
 const TITLE = ["Build.", "Ship.", "Play."];
 const BOOT = ["SYS.BOOT", "LOAD PROFILE", "LINK ESTABLISHED"];
@@ -28,9 +23,8 @@ const GLYPHS = "!<>-_\\/[]{}=+*^?#01";
 
 const pad = (n) => String(n).padStart(2, "0");
 
-// teks teracak lalu menyusun diri menjadi teks akhir (panjang teks tetap)
 const scramble = (el, text, duration = 0.8) => {
-  el._scr?.kill(); // batalkan scramble sebelumnya di elemen yang sama
+  el._scr?.kill();
   const o = { p: 0 };
   el._scr = gsap.to(o, {
     p: 1,
@@ -53,7 +47,6 @@ const Home = () => {
   const menuRef = useRef(null);
   const [active, setActive] = useState(0); // kursor menu, tetap di item terakhir yang disorot
 
-  /* ---- navigasi keyboard: panah atas/bawah memindahkan kursor menu ---- */
   useEffect(() => {
     const onKey = (e) => {
       if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
@@ -256,8 +249,10 @@ const Home = () => {
             <div data-in className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
               <span className="zz-border inline-flex rounded-full p-0.5">
                 <a
-                  href={CV.href}
-                  download={CV.filename}
+                  href={CV}
+                  download="Mochamad_Irfan_Hidayat_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2.5 rounded-full bg-lime-300 px-5 py-2.5 font-body text-xs font-bold uppercase tracking-widest text-neutral-900 transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-300"
                 >
                   Download CV

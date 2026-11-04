@@ -6,7 +6,8 @@ import { setDirection } from "../lib/transition";
 const Navbar = () => {
   const { index, total } = useActiveNav();
 
-  const cx = index === -1 ? "-200px" : `calc(24px + (100% - 48px) * ${(index + 0.5) / total})`;
+  // pakai rem (bukan px) supaya ikut mengecil saat root font-size diperkecil di layar pendek
+  const cx = index === -1 ? "-200px" : `calc(1.5rem + (100% - 3rem) * ${(index + 0.5) / total})`;
 
   return (
     <nav className="flex flex-col gap-4 px-4 pt-6 max-sm:pb-4 sm:flex-row sm:pb-8">
@@ -22,8 +23,8 @@ const Navbar = () => {
         }}
       >
         <div aria-hidden className="absolute inset-0 overflow-hidden rounded-2xl">
-          <div className="absolute inset-y-0 left-0 bg-(--bar)" style={{ width: "max(0px, calc(var(--cx) - 59px))" }} />
-          <div className="absolute inset-y-0 right-0 bg-(--bar)" style={{ left: "calc(var(--cx) + 59px)" }} />
+          <div className="absolute inset-y-0 left-0 bg-(--bar)" style={{ width: "max(0px, calc(var(--cx) - 3.5rem))" }} />
+          <div className="absolute inset-y-0 right-0 bg-(--bar)" style={{ left: "calc(var(--cx) + 3.5rem)" }} />
 
           <div className="absolute inset-y-0 w-30 -translate-x-1/2" style={{ left: "var(--cx)" }}>
             <div className="absolute inset-x-0 bottom-0 top-8.5 bg-(--bar) sm:bottom-8.5 sm:top-0" />

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowLeft, ArrowRight, Check, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ExternalLink, Download } from "lucide-react";
 import PageNotch from "../components/PageNotch";
 import TechIcon from "../components/TechIcon";
 import { PROJECTS } from "../data/projectsData";
@@ -71,7 +71,7 @@ const Frame = ({ project, src, sweep }) => {
   );
 
   if (project.category === "Mobile") {
-    return <div className="relative mx-auto aspect-9/16 h-full max-h-full max-w-[55%] overflow-hidden rounded-[2rem] border-[6px] border-neutral-900 bg-neutral-900 shadow-xl">{img}</div>;
+    return <div className="relative mx-auto aspect-9/16 h-full max-h-full max-w-[55%] overflow-hidden rounded-4xl border-[6px] border-neutral-900 bg-neutral-900 shadow-xl">{img}</div>;
   }
 
   if (project.category === "Web") {
@@ -93,6 +93,7 @@ const Frame = ({ project, src, sweep }) => {
 // Dipisah supaya state dan animasi mulai dari awal tiap pindah proyek (key = slug)
 const Detail = ({ index }) => {
   const project = PROJECTS[index];
+  const isGame = project.category.toLowerCase().includes("game");
   const prev = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length];
   const next = PROJECTS[(index + 1) % PROJECTS.length];
 
@@ -216,12 +217,12 @@ const Detail = ({ index }) => {
     { scope: rootRef },
   );
 
-  const sweep = reduce ? null : <div ref={sweepRef} aria-hidden className="pointer-events-none absolute inset-y-0 -left-[30%] z-10 w-[160%] bg-lime-300 [clip-path:polygon(15%_0,100%_0,85%_100%,0_100%)]" />;
+  const sweep = reduce ? null : <div ref={sweepRef} aria-hidden className="pointer-events-none absolute inset-y-0 left-[-30%] z-10 w-[160%] bg-lime-300 [clip-path:polygon(15%_0,100%_0,85%_100%,0_100%)]" />;
 
   return (
     <section ref={rootRef} className="relative h-full overflow-hidden rounded-2xl bg-(--bar) text-white">
       {/* DEKORASI (di belakang konten) */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.06] mask-[linear-gradient(to_bottom,black,transparent_70%)]" style={DOTS} />
       <div aria-hidden className="pointer-events-none absolute right-0 top-0 hidden h-36 w-72 bg-white/6 lg:block [clip-path:polygon(30%_0,100%_0,100%_100%,0_100%)]" />
       <div aria-hidden className="pointer-events-none absolute right-0 top-0 hidden h-1.5 w-48 bg-lime-300 lg:block [clip-path:polygon(8%_0,100%_0,100%_100%,0_100%)]" />
       <div aria-hidden className="pointer-events-none absolute right-16 top-24 hidden size-2 bg-sky-200 lg:block" />
@@ -232,8 +233,8 @@ const Detail = ({ index }) => {
       <PageNotch />
 
       {/* Hp/tablet: scroll di dalam kartu. Desktop: satu layar */}
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] lg:overflow-y-hidden">
-        <div className="relative z-10 flex min-h-full flex-col gap-5 p-6 sm:p-8 md:pl-28 lg:h-full lg:min-h-0 lg:gap-4 lg:pb-6 lg:pl-28 lg:pr-12 lg:pt-8">
+      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-none lg:overflow-y-hidden">
+        <div className="relative z-10 flex min-h-full flex-col gap-5 p-6 sm:p-8 md:pl-28 lg:h-full lg:min-h-0 lg:gap-4 lg:pb-6 lg:pl-28 lg:pr-12 lg:pt-8 [@media(max-height:840px)]:lg:pt-5 [@media(max-height:840px)]:lg:pb-4 [@media(max-height:840px)]:lg:gap-3">
           {/* TOP BAR */}
           <div className="d-top flex shrink-0 flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-4">
@@ -266,7 +267,7 @@ const Detail = ({ index }) => {
             {/* KIRI: visual + key features */}
             <div className="max-lg:contents lg:flex lg:min-h-0 lg:flex-col lg:gap-4">
               {/* visual */}
-              <div className="order-2 flex flex-col gap-3 lg:order-none lg:min-h-0 lg:flex-1">
+              <div className="order-2 flex flex-col gap-3 lg:order-0 lg:min-h-0 lg:flex-1">
                 <div ref={visualRef} className="relative h-64 overflow-hidden sm:h-80 lg:h-auto lg:min-h-0 lg:flex-1" style={{ containerType: "size" }}>
                   {/* angka proyek raksasa berkontur di belakang */}
                   <div aria-hidden className="d-ghost pointer-events-none absolute left-0 top-0 z-0">
@@ -282,7 +283,7 @@ const Detail = ({ index }) => {
 
                 {shots.length > 1 && (
                   <div className="d-fade flex shrink-0 items-center justify-between gap-3">
-                    <ul className="flex min-w-0 gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+                    <ul className="flex min-w-0 gap-2 overflow-x-auto pb-1 scrollbar-none">
                       {shots.map((src, i) => (
                         <li key={i} className="shrink-0">
                           <button
@@ -306,7 +307,7 @@ const Detail = ({ index }) => {
 
               {/* key features */}
               {project.features?.length > 0 && (
-                <div className="d-fade order-5 flex shrink-0 flex-col gap-3 lg:order-none">
+                <div className="d-fade order-5 flex shrink-0 flex-col gap-3 lg:order-0">
                   <Label>Key features</Label>
                   <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
                     {project.features.map((f) => (
@@ -323,9 +324,9 @@ const Detail = ({ index }) => {
             </div>
 
             {/* KANAN: identitas, deskripsi, stack, role, aksi */}
-            <div className="max-lg:contents lg:flex lg:min-h-0 lg:flex-col lg:justify-center lg:gap-5 lg:overflow-y-auto lg:pr-2 [scrollbar-width:thin]">
+            <div className="max-lg:contents lg:flex lg:min-h-0 lg:flex-col lg:justify-center lg:gap-5 [@media(max-height:840px)]:lg:gap-2 lg:overflow-y-auto lg:pr-2 scrollbar-thin">
               {/* identitas */}
-              <div className="order-1 flex flex-col gap-3 lg:order-none">
+              <div className="order-1 flex flex-col gap-3 lg:order-0">
                 <span className="d-eyebrow d-scr-eyebrow zz-caret font-body text-xs font-bold uppercase tracking-[0.3em] text-lime-300" data-text={`Project ${pad(index + 1)}`}>
                   {`Project ${pad(index + 1)}`}
                 </span>
@@ -341,10 +342,10 @@ const Detail = ({ index }) => {
                 </span>
               </div>
 
-              <p className="d-fade order-3 max-w-md font-body text-sm leading-relaxed text-neutral-300 sm:text-base lg:order-none">{project.description}</p>
+              <p className="d-fade order-3 max-w-md font-body text-sm leading-relaxed text-neutral-300 sm:text-base lg:order-0">{project.description}</p>
 
               {project.technologies?.length > 0 && (
-                <div className="d-fade order-4 flex flex-col gap-3 lg:order-none">
+                <div className="d-fade order-4 flex flex-col gap-3 lg:order-0">
                   <Label>Tech stack</Label>
                   <ul className="flex flex-wrap gap-2">
                     {project.technologies.map((t) => (
@@ -360,14 +361,14 @@ const Detail = ({ index }) => {
               )}
 
               {project.role && (
-                <div className="d-fade order-6 flex flex-col gap-1 lg:order-none">
+                <div className="d-fade order-6 flex flex-col gap-1 lg:order-0">
                   <Label>Role</Label>
                   <p className="font-body text-base font-extrabold">{project.role}</p>
                 </div>
               )}
 
               {project.impact?.length > 0 && (
-                <div className="d-fade order-6 flex flex-col gap-2 lg:order-none">
+                <div className="d-fade order-6 flex flex-col gap-2 lg:order-0">
                   <Label>Impact</Label>
                   <ul className="flex flex-col gap-1.5">
                     {project.impact.map((item) => (
@@ -379,29 +380,43 @@ const Detail = ({ index }) => {
                 </div>
               )}
 
-              {(project.liveUrl || project.githubUrl) && (
-                <div className="order-7 flex flex-wrap gap-3 pb-2 max-sm:[&>*]:flex-1 lg:order-none">
-                  {project.liveUrl && (
+              {(isGame ? project.downloadUrl : project.liveUrl || project.githubUrl) && (
+                <div className="order-7 flex flex-wrap gap-3 pb-2 max-sm:*:flex-1 lg:order-0">
+                  {isGame ? (
                     <span className="d-cta zz-border inline-flex rounded-full p-0.5">
                       <a
-                        href={project.liveUrl}
+                        href={project.downloadUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-lime-300 px-6 py-3 font-body text-sm font-bold uppercase tracking-widest text-neutral-900 transition-colors hover:bg-white"
                       >
-                        Live demo <ExternalLink className="size-4" />
+                        Download <Download className="size-4" />
                       </a>
                     </span>
-                  )}
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="d-cta inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-body text-sm font-bold uppercase tracking-widest ring-1 ring-white/30 transition-colors hover:bg-white/10"
-                    >
-                      GitHub <ExternalLink className="size-4" />
-                    </a>
+                  ) : (
+                    <>
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="d-cta inline-flex items-center justify-center gap-2 rounded-full bg-lime-300 px-6 py-3 font-body text-sm font-bold uppercase tracking-widest text-neutral-900 hover:bg-white"
+                        >
+                          Live demo <ExternalLink className="size-4" />
+                        </a>
+                      )}
+
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="d-cta inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-body text-sm font-bold uppercase tracking-widest ring-1 ring-white/30 transition-colors hover:bg-white/10"
+                        >
+                          GitHub <ExternalLink className="size-4" />
+                        </a>
+                      )}
+                    </>
                   )}
                 </div>
               )}

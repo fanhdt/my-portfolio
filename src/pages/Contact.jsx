@@ -171,7 +171,7 @@ const Contact = () => {
     { scope: rootRef },
   );
 
-  const img = IMAGES.hero;
+  const img = IMAGES.background;
 
   return (
     <section ref={rootRef} className="relative h-full overflow-hidden rounded-2xl bg-(--bar) text-white">

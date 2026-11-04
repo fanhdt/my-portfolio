@@ -1,32 +1,32 @@
 import { Monitor, Server, Database, Smartphone, Gamepad2, Sparkles, Wrench } from "lucide-react";
 
-// Penjelasan singkat per teknologi (kunci = nama teknologi, harus sama persis dengan yang di projectsData)
+// Short descriptions for each technology (key = technology name, must match projectsData exactly)
 export const SKILL_INFO = {
-  HTML: "Struktur dan semantik halaman web.",
-  CSS: "Styling, layout, dan desain responsif.",
-  JavaScript: "Bahasa utama untuk logika dan interaksi di web.",
-  TypeScript: "JavaScript dengan tipe statis untuk kode yang lebih aman dan mudah dirawat.",
-  React: "Library untuk membangun antarmuka berbasis komponen.",
-  Vue: "Framework frontend yang reaktif dan ringan.",
-  "Next.js": "Framework React untuk routing, rendering, dan aplikasi fullstack.",
-  "Node.js": "Runtime JavaScript untuk menjalankan server dan API.",
-  Express: "Framework Node.js untuk membuat REST API.",
-  PHP: "Bahasa server-side untuk aplikasi web.",
-  Laravel: "Framework PHP untuk autentikasi, ORM, dan arsitektur backend.",
-  Python: "Bahasa serbaguna untuk backend, otomasi, dan AI.",
-  FastAPI: "Framework Python modern untuk membangun REST API yang cepat.",
-  MongoDB: "Database NoSQL berbasis dokumen.",
-  PostgreSQL: "Database relasional untuk data terstruktur.",
-  "React Native": "Membangun aplikasi mobile lintas platform dengan React.",
-  Unity: "Game engine untuk game 2D, 3D, dan pengalaman interaktif.",
-  "C#": "Bahasa pemrograman untuk scripting di Unity.",
-  VR: "Pengalaman realitas virtual yang imersif.",
-  Docker: "Container untuk menjalankan aplikasi secara konsisten.",
-  MinIO: "Penyimpanan objek (file) yang kompatibel dengan S3.",
-  "LLM APIs": "Mengintegrasikan model bahasa ke dalam aplikasi.",
-  Prompting: "Merancang instruksi agar output AI lebih akurat.",
-  RAG: "Menjawab pertanyaan dari dokumen dengan mengambil konteks relevan sebelum model menjawab.",
-  "CI/CD": "Otomatisasi build, test, dan deploy.",
+  HTML: "Defines the structure and semantics of web pages.",
+  CSS: "Handles styling, layouts, and responsive design.",
+  JavaScript: "The primary language for web logic and interactivity.",
+  TypeScript: "JavaScript with static typing for safer and more maintainable code.",
+  React: "A library for building component-based user interfaces.",
+  Vue: "A lightweight and reactive frontend framework.",
+  "Next.js": "A React framework for routing, rendering, and fullstack applications.",
+  "Node.js": "A JavaScript runtime for building servers and APIs.",
+  Express: "A Node.js framework for building REST APIs.",
+  PHP: "A server-side programming language for web applications.",
+  Laravel: "A PHP framework for authentication, ORM, and backend architecture.",
+  Python: "A versatile programming language for backend development, automation, and AI.",
+  FastAPI: "A modern Python framework for building high-performance REST APIs.",
+  MongoDB: "A document-oriented NoSQL database.",
+  PostgreSQL: "A relational database for structured data.",
+  "React Native": "A framework for building cross-platform mobile applications with React.",
+  Unity: "A game engine for creating 2D, 3D, and interactive experiences.",
+  "C#": "A programming language used for scripting in Unity.",
+  VR: "Immersive experiences powered by virtual reality technology.",
+  Docker: "A containerization platform for running applications consistently.",
+  MinIO: "Object storage compatible with the S3 API.",
+  "LLM APIs": "Integrating large language models into applications.",
+  Prompting: "Designing instructions to produce more accurate AI outputs.",
+  RAG: "Retrieving relevant context from documents before generating AI responses.",
+  "CI/CD": "Automating build, testing, and deployment workflows.",
 };
 
 export const PRIMARY_GROUPS = [
@@ -37,14 +37,15 @@ export const PRIMARY_GROUPS = [
   { title: "Game & VR", icon: Gamepad2, span: "lg:col-span-6", items: ["Unity", "C#", "VR"] },
 ];
 
-// placeholder: isi dengan yang benar-benar sedang kamu pelajari
+// Technologies and tools currently being explored
 export const EXPLORING_GROUPS = [
   { title: "AI Integration", icon: Sparkles, span: "lg:col-span-6", items: ["LLM APIs", "Prompting", "RAG"] },
   { title: "DevOps", icon: Wrench, span: "lg:col-span-6", items: ["Docker", "CI/CD"] },
 ];
 
-// Statistik gaya RPG (halaman About). Nilai 0-100.
-// CATATAN: nilai TypeScript, Python, FastAPI di bawah hanya contoh, ganti sesuai penilaianmu.
+// RPG-style statistics (About page). Values range from 0 to 100.
+// NOTE: TypeScript, Python, and FastAPI values below are examples.
+// Adjust them based on your actual proficiency.
 export const STAT_GROUPS = [
   {
     label: "Frontend",
@@ -80,5 +81,5 @@ export const STAT_GROUPS = [
   },
 ];
 
-// rata-rata nilai satu grup, dibulatkan
+// Calculate the average level of a group and round to the nearest integer.
 export const averageLevel = (items) => Math.round(items.reduce((sum, it) => sum + it.value, 0) / items.length);

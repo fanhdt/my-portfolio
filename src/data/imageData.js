@@ -1,7 +1,11 @@
 import heroImage from "../assets/images/hero.webp";
+import heroProfile from "../assets/images/profile.jpeg";
+import backgroundImage from "../assets/images/background.jpeg";
 
 export const IMAGES = {
   hero: heroImage,
+  profile: heroProfile,
+  background: backgroundImage,
 };
 
 const modules = import.meta.glob("../assets/images/*/*.{png,jpg,jpeg,webp}", {

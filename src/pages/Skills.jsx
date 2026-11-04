@@ -80,7 +80,7 @@ const buildTab = (groups) => {
 
 const TAB_DATA = Object.fromEntries(Object.entries(GROUPS).map(([id, groups]) => [id, buildTab(groups)]));
 
-const FALLBACK_INFO = "Teknologi yang saya gunakan dan pelajari.";
+const FALLBACK_INFO = "Technology that I use and learn.";
 
 /* ===================== HELPER ANIMASI ===================== */
 
@@ -280,7 +280,7 @@ const Skills = () => {
       <div className="absolute inset-0 overflow-hidden">
         <div className="flex h-full min-h-0 flex-col">
           {/* HEADER + TABS */}
-          <header className="flex shrink-0 flex-col gap-3 p-4 pb-3 sm:gap-4 sm:p-8 sm:pb-4 md:pl-28 lg:flex-row lg:items-end lg:justify-between lg:pr-12 lg:pt-8">
+          <header className="flex shrink-0 flex-col gap-3 p-4 pb-3 sm:gap-4 sm:p-8 sm:pb-4 md:pl-28 lg:flex-row lg:items-end lg:justify-between lg:pr-12 lg:pt-8 [@media(max-height:840px)]:lg:pt-5 [@media(max-height:840px)]:sm:pb-2">
             <div>
               <h1 aria-label="System // Skills" className="zz-rgb font-display uppercase leading-[0.85] tracking-wide" style={{ fontSize: "clamp(2.25rem, min(9vh, 12vw), 4.5rem)" }}>
                 <span aria-hidden className="s-scr mb-1 block text-lime-300" style={{ fontSize: "0.4em" }} data-text="System //">
@@ -290,7 +290,7 @@ const Skills = () => {
                   Skills
                 </span>
               </h1>
-              <p className="mt-2 hidden max-w-md font-body text-xs text-neutral-400 sm:block sm:text-sm">Technology profile / tools I use to build digital products.</p>
+              <p className="mt-2 hidden max-w-md font-body text-xs text-neutral-400 sm:block sm:text-sm [@media(max-height:840px)]:hidden">Technology profile / tools I use to build digital products.</p>
             </div>
 
             <div className="flex flex-col gap-3 lg:items-end">
@@ -340,7 +340,7 @@ const Skills = () => {
               >
                 <div key={tab} className="grid gap-x-8 gap-y-4 xl:grid-cols-2">
                   {data.columns.map((col, c) => (
-                    <div key={c} className="flex flex-col gap-4 lg:gap-5">
+                    <div key={c} className="flex flex-col gap-4 lg:gap-5 [@media(max-height:840px)]:lg:gap-3">
                       {col.map(({ title, icon: Icon, items, start }) => (
                         <section key={title} aria-label={title}>
                           <h3 className="mb-2 flex items-center gap-2 font-body text-[10px] font-extrabold uppercase tracking-[0.25em] text-lime-300">
@@ -368,7 +368,7 @@ const Skills = () => {
                                       if (!on) fx(e.currentTarget, name);
                                     }}
                                     onMouseEnter={(e) => fx(e.currentTarget, name)}
-                                    className={`skill-item relative isolate flex min-h-11 w-full items-center gap-2.5 overflow-hidden px-3 py-1.5 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-lime-300 max-lg:rounded-full max-lg:ring-1 max-lg:ring-white/15 lg:min-h-0 lg:border-b lg:border-white/10 ${
+                                    className={`skill-item relative isolate flex min-h-11 w-full items-center gap-2.5 overflow-hidden px-3 py-1.5 [@media(max-height:840px)]:lg:py-1 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-lime-300 max-lg:rounded-full max-lg:ring-1 max-lg:ring-white/15 lg:min-h-0 lg:border-b lg:border-white/10 ${
                                       on ? "text-neutral-900" : "text-white hover:text-lime-300"
                                     }`}
                                   >
@@ -398,7 +398,7 @@ const Skills = () => {
               </div>
 
               {/* status bar bawah (desktop) */}
-              <div aria-hidden className="hidden shrink-0 items-center justify-between border-t border-white/10 py-3 pr-6 font-body text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500 lg:flex">
+              <div aria-hidden className="hidden shrink-0 items-center justify-between border-t border-white/10 py-3 [@media(max-height:840px)]:py-2 pr-6 font-body text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500 lg:flex">
                 <span className="flex items-center gap-2">
                   <span className="size-1.5 animate-pulse rounded-full bg-lime-300 motion-reduce:animate-none" />
                   Database // Active
@@ -423,7 +423,7 @@ const Skills = () => {
                     <X aria-hidden className="size-4" />
                   </button>
 
-                  <div className="relative flex flex-col gap-3 overflow-y-auto p-4 scrollbar-none max-lg:max-h-[min(46svh,22rem)] sm:p-5 lg:h-full lg:justify-center lg:gap-4 lg:p-8 lg:pb-14 lg:pl-[16%]">
+                  <div className="relative flex flex-col gap-3 overflow-y-auto p-4 scrollbar-none max-lg:max-h-[min(46svh,22rem)] sm:p-5 lg:h-full lg:justify-center lg:gap-4 lg:p-8 lg:pb-14 lg:pl-[16%] [@media(max-height:840px)]:lg:gap-2.5 [@media(max-height:840px)]:lg:p-5 [@media(max-height:840px)]:lg:pb-12 [@media(max-height:840px)]:lg:pl-[16%]">
                     <p className="sr-only" aria-live="polite">
                       {selected} selected, used in {usedIn.length} {usedIn.length === 1 ? "project" : "projects"}
                     </p>
@@ -448,7 +448,7 @@ const Skills = () => {
                     </div>
 
                     {/* data inti: status, kategori, pengalaman, bidang (tanpa persentase) */}
-                    <dl className="d-item grid grid-cols-2 gap-x-4 gap-y-2.5 border-y border-neutral-900/20 py-3 font-body">
+                    <dl className="d-item grid grid-cols-2 gap-x-4 gap-y-2.5 border-y border-neutral-900/20 py-3 [@media(max-height:840px)]:py-2 font-body">
                       <div>
                         <dt className="text-[10px] font-bold uppercase tracking-[0.25em] opacity-60">Status</dt>
                         <dd className="mt-1 flex flex-wrap gap-1">
